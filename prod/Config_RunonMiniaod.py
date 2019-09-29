@@ -4,8 +4,9 @@ import string
 
 
 import FWCore.ParameterSet.Config as cms 
+from Configuration.StandardSequences.Eras import eras
 
-process = cms.Process('jetToolbox')
+process = cms.Process('jetToolbox',eras.Run2_2016)
 
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
@@ -75,11 +76,11 @@ else:
 if len(options.globalTag) == 0:
     if runOnData:
         if runOnLegacy:
-            options.globalTag = '80X_dataRun2_2016LegacyRepro_v4'
+            options.globalTag = '94X_dataRun2_v10'
         else:
             options.globalTag = '80X_dataRun2_2016SeptRepro_v7'
     else:
-        options.globalTag = '80X_mcRun2_asymptotic_2016_TrancheIV_v8'
+        options.globalTag = '94X_mcRun2_asymptotic_v3'
     
     print 'WARNING: No global tag provided. Will use the default one: {}.'.format(
         options.globalTag
@@ -140,8 +141,8 @@ for type in ['AK4PFchs','AK4PFchs_antib']:
 
 ## ----------------- Global Tag ------------------
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
-from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, options.globalTag)
+from Configuration.AlCa.GlobalTag import GlobalTag
+process.GlobalTag = GlobalTag(process.GlobalTag, options.globalTag,'')
 #--------------------- Report and output ---------------------------
 # Note: in grid runs this parameter is not used.
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(options.maxEvents))
@@ -222,7 +223,7 @@ process.out.outputCommands.append("keep *_slimmedGenJetsAK8_*_*")
 if runOnData:
         if runOnLegacy: 
            process.source = cms.Source("PoolSource",
-           fileNames = cms.untracked.vstring("/store/data/Run2016F/SinglePhoton/MINIAOD/07Aug17-v1/10000/0A7D67BE-B69E-E711-B475-7CD30ACE15D0.root")
+           fileNames = cms.untracked.vstring("/store/data/Run2016H/SinglePhoton/MINIAOD/07Aug17-v1/90000/F627C0CE-F59B-E711-A826-90B11C08CDB7.root")
            )
         else:
              process.source = cms.Source("PoolSource",
@@ -230,13 +231,18 @@ if runOnData:
              )
 else:
        process.source = cms.Source("PoolSource",
-           fileNames = cms.untracked.vstring("/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/08AC6DB1-19B7-E611-A8F8-001E67E71E20.root","/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/1CEF6ECD-18B7-E611-B197-00304867FEAF.root","/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/5A0067CC-18B7-E611-8B09-D4AE527EDE00.root","/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/882363C0-18B7-E611-AE85-A0000620FE80.root")#"/store/mc/RunIISummer16MiniAODv2/QCD_Pt_2400to3200_TuneCUETP8M1_13TeV_pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/EA64EA90-D7B6-E611-91F8-0CC47A4D7606.root")##"/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/08AC6DB1-19B7-E611-A8F8-001E67E71E20.root")
+           fileNames = cms.untracked.vstring("/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/08AC6DB1-19B7-E611-A8F8-001E67E71E20.root")#"/store/mc/RunIISummer16MiniAODv2/G1Jet_Pt-400To650_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/041C6CB0-F2E2-E611-8FB0-24BE05C626B1.root")#, "/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/08AC6DB1-19B7-E611-A8F8-001E67E71E20.root","/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/1CEF6ECD-18B7-E611-B197-00304867FEAF.root","/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/5A0067CC-18B7-E611-8B09-D4AE527EDE00.root","/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/882363C0-18B7-E611-AE85-A0000620FE80.root")#"/store/mc/RunIISummer16MiniAODv2/QCD_Pt_2400to3200_TuneCUETP8M1_13TeV_pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/EA64EA90-D7B6-E611-91F8-0CC47A4D7606.root")##"/store/mc/RunIISummer16MiniAODv2/GJet_Pt-15To6000_TuneCUETP8M1-Flat_13TeV_pythia8_20M/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/08AC6DB1-19B7-E611-A8F8-001E67E71E20.root")
            )
 #process.source.eventsToProcess = cms.untracked.VEventRange("281613:11018807")#,"283884:939706570","283884:870499187","283885:16020018","274316:389398083")
 
 
 
-
+# XML ideal geometry description
+#include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cfi"
+# Calo geometry service model
+#include "Geometry/CaloEventSetup/data/CaloGeometry.cfi"
+# Calo topology service model
+#include "Geometry/CaloEventSetup/data/CaloTopology.cfi"
 
 
 
@@ -259,65 +265,46 @@ if not runOnData:
           'pfCombinedSecondaryVertexV2BJetTags',
           'pfCombinedInclusiveSecondaryVertexV2BJetTags',
           'pfCombinedMVAV2BJetTags',
-          'deepFlavourJetTags:probb',
-          'deepFlavourJetTags:probbb',
-          'deepFlavourJetTags:probc',
-          'deepFlavourJetTags:probcc'
+          'pfDeepCSVJetTags:probb',
+          'pfDeepCSVJetTags:probbb',
+          'pfDeepCSVJetTags:probc'
       ]
 
       from PhysicsTools.PatAlgos.tools.jetTools import *
       ## Update the slimmedJets in miniAOD: corrections from the chosen Global Tag are applied and the b-tag discriminators are re-evaluated
       updateJetCollection(
           process,
+          labelName = 'AK4PFCHSNEW',
           jetSource = cms.InputTag('slimmedJets'),
           jetCorrections = ('AK4PFchs', cms.vstring(['L1FastJet', 'L2Relative', 'L3Absolute']), 'None'),
           btagDiscriminators = bTagDiscriminators
       )
+   #   process.jecSequence = cms.Sequence(process.patJetCorrFactorsAK4PFCHSNEW * process.updatedPatJetsAK4PFCHSNEW)
+
+      process.tsk = cms.Task()
+      for mod in process.producers_().itervalues():
+        process.tsk.add(mod)
+      for mod in process.filters_().itervalues():
+        process.tsk.add(mod)
+      process.jecSequence = cms.Sequence(process.tsk) 
+
+process.load("Configuration.Geometry.GeometryRecoDB_cff")
+process.load("Configuration.StandardSequences.Services_cff")
+process.load("Configuration.StandardSequences.MagneticField_cff")
+process.load("Geometry.CaloEventSetup.CaloTowerConstituents_cfi")
+# -- EGM post-reco sequence
+from RecoEgamma.EgammaTools.EgammaPostRecoTools import setupEgammaPostRecoSeq
+
+setupEgammaPostRecoSeq(process,
+                       runVID=True,
+                       applyEnergyCorrections=True,
+                       applyVIDOnCorrectedEgamma=True,
+                       isMiniAOD=True,
+                       eleIDModules=['RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV70_cff','RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff'],
+                       phoIDModules= ['RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Spring16_V2p2_cff','RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Spring16_nonTrig_V1_cff'],
+era='2016-Legacy')
 
 
-
-
-
-
-
-
-
-
-
-if not runOnData:
-     ##Photon Energy smearer------------------------------------------
-      process.load('Configuration.StandardSequences.Services_cff')
-      process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService",
-
-                                                       calibratedPatElectrons  = cms.PSet( initialSeed = cms.untracked.uint32(81),
-                                                                                                                 engineName = cms.untracked.string('TRandom3'),
-                                                                                           ),
-                                                       
-                                                       calibratedPatPhotons  = cms.PSet( initialSeed = cms.untracked.uint32(81),
-                                                                                                                 engineName = cms.untracked.string('TRandom3'),
-                                                                                           ),
-                                                       )  
-
-
-# Add map producer for photon identification 
-process.load("RecoEgamma/PhotonIdentification/PhotonIDValueMapProducer_cfi")
-from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
-
-dataFormat = DataFormat.MiniAOD
-switchOnVIDPhotonIdProducer(process, dataFormat)
-my_id_modules = ['RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Spring16_V2p2_cff','RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Spring16_nonTrig_V1_cff']
-for idmod in my_id_modules:
-         setupAllVIDIdsInModule(process,idmod,setupVIDPhotonSelection) 
-
-
-process.load("RecoEgamma/PhotonIdentification/PhotonIDValueMapProducer_cfi")
-from EgammaAnalysis.ElectronTools.regressionWeights_cfi import regressionWeights
-process = regressionWeights(process)
-
-from EgammaAnalysis.ElectronTools.calibrationTablesRun2 import files
-
-process.load('EgammaAnalysis.ElectronTools.regressionApplication_cff')
-process.load('EgammaAnalysis.ElectronTools.calibratedPatPhotonsRun2_cfi')
 
 if not runOnLegacy:
       process.load('EgammaAnalysis.ElectronTools.calibratedPatbeforeGXPhotonsRun2_cfi')
@@ -326,28 +313,7 @@ if not runOnLegacy:
       else:
             process.calibratedPatPhotons80X.isMC = cms.bool(True)       
 
-if runOnData: 
-      process.calibratedPatPhotons.isMC = cms.bool(False)
-else: 
-      process.calibratedPatPhotons.isMC = cms.bool(True)
-      
 
-
-if runOnLegacy:
-        process.selectedPhotons = cms.EDFilter('PATPhotonSelector',
-              src = cms.InputTag('calibratedPatPhotons'),
-              cut = cms.string('pt>5 && abs(eta)'))
-else:
-        process.selectedPhotons = cms.EDFilter('PATPhotonSelector',
-              src = cms.InputTag('calibratedPatPhotons80X'),
-              cut = cms.string('pt>5 && abs(eta)'))
-              
-srcViD = "selectedPhotons"
-process.egmPhotonIDs.physicsObjectSrc = cms.InputTag(srcViD)
-process.egmPhotonIsolation.srcToIsolate = cms.InputTag(srcViD)
-process.photonIDValueMapProducer.srcMiniAOD = cms.InputTag(srcViD)
-process.photonRegressionValueMapProducer.srcMiniAOD = cms.InputTag(srcViD)
-process.photonMVAValueMapProducer.srcMiniAOD = cms.InputTag(srcViD)
 
 
 
@@ -453,9 +419,9 @@ if not runOnLegacy and not runOnData:
 
 
 
-process.load('RecoJets.JetProducers.QGTagger_cfi')
-process.QGTagger.srcJets          = cms.InputTag('slimmedJets') if runOnData else cms.InputTag('selectedUpdatedPatJets')       # Could be reco::PFJetCollection or pat::JetCollection (both AOD and miniAOD)
-process.QGTagger.jetsLabel        = cms.string('QGL_AK4PFchs')        # Other options: see https://twiki.cern.ch/twiki/bin/viewauth/CMS/QGDataBaseVersion
+#process.load('RecoJets.JetProducers.QGTagger_cfi')
+#process.QGTagger.srcJets          = cms.InputTag('slimmedJets') if runOnData else cms.InputTag('selectedUpdatedPatJets')       # Could be reco::PFJetCollection or pat::JetCollection (both AOD and miniAOD)
+#process.QGTagger.jetsLabel        = cms.string('QGL_AK4PFchs')        # Other options: see https://twiki.cern.ch/twiki/bin/viewauth/CMS/QGDataBaseVersion
 
 
 
@@ -481,7 +447,7 @@ process.dijets     = cms.EDAnalyzer('DijetTreeProducer',
   isreMiniAOD     = cms.bool(False) if runOnLegacy else cms.bool(True),
   Endcaps_photon  = cms.bool(True) if runOnEndcaps else cms.bool(False),
   ## JETS/MET ########################################
-  jetsAK4             = cms.InputTag('slimmedJets') if runOnData else cms.InputTag('selectedUpdatedPatJets'), 
+  jetsAK4             = cms.InputTag('slimmedJets') if runOnData else cms.InputTag('updatedPatJetsTransientCorrectedAK4PFCHSNEW'), 
   jetsAK8             = cms.InputTag('slimmedJetsAK8'),
   jetsPUPPI           = cms.InputTag("slimmedJetsPuppi"),     
   rho              = cms.InputTag('fixedGridRhoFastjetAll'),
@@ -497,31 +463,32 @@ process.dijets     = cms.EDAnalyzer('DijetTreeProducer',
   
   ## PHOTONS ########################################
   ptMinPhoton               = cms.double(10),
-  Photon                    = cms.InputTag('selectedPhotons'),
-  Photonsmeared             = cms.InputTag('calibratedPatPhotons') if runOnLegacy else cms.InputTag('calibratedPatPhotons80X'),
+  Photon                    = cms.InputTag('slimmedPhotons'),
+  Photonsmeared             = cms.InputTag('slimmedPhotons') if runOnLegacy else cms.InputTag('calibratedPatPhotons80X'),
   GenPhoton                 = cms.InputTag('slimmedGenPhotons'),
-  full5x5SigmaIEtaIEtaMap   = cms.InputTag('photonIDValueMapProducer:phoFull5x5SigmaIEtaIEta'),
-  phoChargedIsolation       = cms.InputTag('photonIDValueMapProducer:phoChargedIsolation'),
-  phoNeutralHadronIsolation = cms.InputTag('photonIDValueMapProducer:phoNeutralHadronIsolation'),
-  phoPhotonIsolation        = cms.InputTag('photonIDValueMapProducer:phoPhotonIsolation'),
+ # full5x5SigmaIEtaIEtaMap   = cms.InputTag('photonIDValueMapProducer:phoFull5x5SigmaIEtaIEta'),
+ # phoChargedIsolation       = cms.InputTag('photonIDValueMapProducer:phoChargedIsolation'),
+ # phoNeutralHadronIsolation = cms.InputTag('photonIDValueMapProducer:phoNeutralHadronIsolation'),
+ # phoPhotonIsolation        = cms.InputTag('photonIDValueMapProducer:phoPhotonIsolation'),
   full5x5SigmaIEtaIPhiMap   = cms.InputTag("photonIDValueMapProducer:phoFull5x5SigmaIEtaIPhi"),
-  full5x5E1x3Map      = cms.InputTag("photonIDValueMapProducer:phoFull5x5E1x3"),
-  full5x5E2x2Map      = cms.InputTag("photonIDValueMapProducer:phoFull5x5E2x2"),
-  full5x5E2x5MaxMap   = cms.InputTag("photonIDValueMapProducer:phoFull5x5E2x5Max"),
-  full5x5E5x5Map      = cms.InputTag("photonIDValueMapProducer:phoFull5x5E5x5"),
-  esEffSigmaRRMap     = cms.InputTag("photonIDValueMapProducer:phoESEffSigmaRR"),
-  phoWorstChargedIsolation = cms.InputTag("photonIDValueMapProducer:phoWorstChargedIsolation"),
-  PhotonUncorr              = cms.InputTag('calibratedPatbeforegxPhotons') if runOnLegacy else cms.InputTag('selectedPhotons'),
+ # full5x5E1x3Map      = cms.InputTag("photonIDValueMapProducer:phoFull5x5E1x3"),
+ # full5x5E2x2Map      = cms.InputTag("photonIDValueMapProducer:phoFull5x5E2x2"),
+ # full5x5E2x5MaxMap   = cms.InputTag("photonIDValueMapProducer:phoFull5x5E2x5Max"),
+ # full5x5E5x5Map      = cms.InputTag("photonIDValueMapProducer:phoFull5x5E5x5"),
+#  esEffSigmaRRMap     = cms.InputTag("photonIDValueMapProducer:phoESEffSigmaRR"),
+#  phoWorstChargedIsolation = cms.InputTag("photonIDValueMapProducer:phoWorstChargedIsolation"),
+  PhotonUncorr              = cms.InputTag('slimmedPhotons') if runOnLegacy else cms.InputTag('selectedPhotons'),
   eb               = cms.InputTag('reducedEgamma:reducedEBRecHits'),
   ee               = cms.InputTag('reducedEgamma:reducedEERecHits'),
-  phoMediumIdBoolMap = cms.InputTag("egmPhotonIDs:mvaPhoID-Spring16-nonTrig-V1-wp90"),
+ # phoMediumIdBoolMap = cms.InputTag("egmPhotonIDs:mvaPhoID-Spring16-nonTrig-V1-wp90"),
   
   ## MC ########################################
   pu                        = cms.untracked.InputTag('slimmedAddPileupInfo'), # Updated from untracked to 80X by Juska
   ptHat                     = cms.untracked.InputTag('generator'), # Why do these need to be 'untracked' anyway?
   genParticles              = cms.InputTag('packedGenParticles'),#'prunedGenParticlesDijet'),
   genJetsAK4                = cms.InputTag('slimmedGenJets'), 
-  genJetsAK8                = cms.InputTag('slimmedGenJetsAK8'),  
+  genJetsAK8                = cms.InputTag('slimmedGenJetsAK8'), 
+  lheweight                 = cms.InputTag('externalLHEProducer'), 
  
  
    ## electrons ######################################## 
@@ -610,20 +577,6 @@ process.dijets     = cms.EDAnalyzer('DijetTreeProducer',
 process.p = cms.Path()  
 process.p +=                      process.chs
 if not runOnData:
-       process.p +=                     process.prunedGenParticlesDijet
-       process.p +=                     process.slimmedGenJetsAK8
-if not runOnData and not runOnLegacy:
-       process.p +=                     process.mucorMET
-       process.p +=                     process.fullPatMetSequence
-
-process.p +=                      process.regressionApplication
-if runOnLegacy: 
-   process.p +=                      process.calibratedPatPhotons
-else:
-   process.p +=                      process.calibratedPatPhotons*process.calibratedPatPhotons80X*process.calibratedPatPhotonsbeforeGS
-process.p +=                      process.selectedPhotons
-process.p +=                      process.egmPhotonIDSequence
-if not runOnLegacy and runOnData:
-       process.p +=                      process.fullPatMetSequence  # If you are re-correctign the default MET
-       process.p +=                      process.egcorrMET
+        process.p +=                      process.jecSequence 
+process.p +=                      process.egammaPostRecoSeq
 process.p +=                      process.dijets

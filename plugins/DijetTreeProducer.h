@@ -43,6 +43,12 @@
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
+#include "Geometry/CaloTopology/interface/CaloTopology.h"
+#include "FWCore/Framework/interface/ESHandle.h" 
+#include "Geometry/CaloEventSetup/interface/CaloTopologyRecord.h"
+#include "RecoEcal/EgammaCoreTools/interface/EcalClusterTools.h"
+
+#include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
 enum JetAlgorithm {
   AK4,
   AK8,
@@ -123,6 +129,8 @@ class DijetTreeProducer : public edm::EDAnalyzer
     
     // Migrate to consumes-system for running in 80X
 
+    
+
     edm::EDGetTokenT<pat::PhotonCollection> srcPhoton_;
     edm::EDGetTokenT<pat::PhotonCollection> srcPhotonsmeared_;
     edm::EDGetTokenT<pat::PhotonCollection> srcPhotonsnofix_;
@@ -131,7 +139,7 @@ class DijetTreeProducer : public edm::EDAnalyzer
     edm::EDGetTokenT<pat::ElectronCollection> srcElectronsmeared_;
     edm::EDGetTokenT<pat::MuonCollection> srcMuon_;
     edm::EDGetTokenT<pat::PackedCandidateCollection> srcPfCands_;
-    
+    edm::EDGetTokenT<LHEEventProduct> lheToken_;
     
     edm::EDGetTokenT<edm::ValueMap<float>> full5x5SigmaIEtaIEtaMapToken_;
     edm::EDGetTokenT<edm::ValueMap<float>> phoChargedIsolationToken_;
@@ -146,12 +154,17 @@ class DijetTreeProducer : public edm::EDAnalyzer
     edm::EDGetTokenT<edm::ValueMap<float>> phoWorstChargedIsolationToken_;
     edm::EDGetTokenT<edm::ValueMap<bool> > phoMediumIdBoolMapToken_;
     
+    
+    
+    
     edm::InputTag barrelRecHitCollection_;
     edm::InputTag endcapRecHitCollection_;
     
-    edm::EDGetTokenT<EcalRecHitCollection> srcebrechit_;
-    edm::EDGetTokenT<EcalRecHitCollection> srceerechit_;
-    
+    edm::Handle<EcalRecHitCollection> ecalRecHitsEBHandle_;
+    edm::Handle<EcalRecHitCollection> ecalRecHitsEEHandle_;
+    edm::EDGetTokenT<EcalRecHitCollection> ecalRecHitsEBToken_;
+    edm::EDGetTokenT<EcalRecHitCollection> ecalRecHitsEEToken_;
+    edm::ESHandle<CaloTopology> caloTopoHandle_;
 
 
     
@@ -180,7 +193,11 @@ class DijetTreeProducer : public edm::EDAnalyzer
 
     edm::Service<TFileService> fs_;
     TTree *outTree_;
-
+    TTree *outTree_full_event_;
+    
+    
+    
+    std::vector<float> *weight_pdf_as_;
     //---- TRIGGER -------------------------
     edm::EDGetTokenT<edm::TriggerResults> srcTriggerResults_;
     edm::EDGetTokenT<pat::PackedTriggerPrescales> srcTriggerPrescale_;
@@ -219,6 +236,10 @@ class DijetTreeProducer : public edm::EDAnalyzer
         
     
     //---- photon variables --------------
+    std::vector<float> *ptphoton_eff_, *etaphoton_eff_, *etaphoton_GEN_eff_, *ptphoton_GEN_eff_,*phiphoton_GEN_eff_ ;
+    std::vector<float> *etajet_GEN_eff_, *ptjet_GEN_eff_,*phijet_GEN_eff_ ;
+    double weighteff_;
+    std::vector<bool> *isFake_eff_;
     std::vector<float> *ptphoton_,*etaphoton_,*phiphoton_,*energyphoton_,*full5x5SigmaIEtaIEtaMapTokenphoton_,*phoChargedIsolationTokenphoton_,*phoNeutralHadronIsolationTokenphoton_,*phoPhotonIsolationTokenphoton_,*hadTowOverEm_, *phoFull5x5SigmaIEtaIPhiTokenphoton_, *phoFull5x5E5x5Tokenphoton_, *phoFull5x5E2x2Tokenphoton_, *phoESEffSigmaRRTokenphoton_, *R9_, *etawidth_, *phiwidth_, *ES_energy_, *phoFull5x5E2x5Tokenphoton_, *phoFull5x5E1x3Tokenphoton_, *phoWorstChargedIsolationTokenphoton_;
     std::vector<float> *ptsmearedphoton_,*etasmearedphoton_,*phismearedphoton_,*energysmearedphoton_,*full5x5SigmaIEtaIEtaMapTokensmearedphoton_,*phoChargedIsolationTokensmearedphoton_,*phoNeutralHadronIsolationTokensmearedphoton_,*phosmearedphotonIsolationTokensmearedphoton_;
     std::vector<bool>  *isPhotonLoose_,*isPhotonMedium_,*isPhotonTight_,  *HaspixelSeed_ , *electronconvVeto_, *isFakephoton_,*isPhotonMedium_EG_MVA_;
@@ -228,8 +249,9 @@ class DijetTreeProducer : public edm::EDAnalyzer
     
     std::vector<bool>  *isMatch30_,*isMatch50_,*isMatch75_,*isMatch90_,*isMatch120_,*isMatch165_, *isGenMatch_;
     
-   //std::vector<float> *ptphotonnofix_;
-    //  std::vector<float> *PFpx, *PFpy, *PFpz, 
+    std::vector<float> *photon_scaleUNC_gainup_,*photon_scaleUNC_gaindown_,*photon_scaleUNC_systup_,*photon_scaleUNC_systdown_,*photon_scaleUNC_statup_,*photon_scaleUNC_statdown_,*photon_scaleUNC_ETup_,*photon_scaleUNC_ETdown_,*photon_smearUNC_phiup_,*photon_smearUNC_rhodown_,*photon_smearUNC_rhoup_,*photon_smear_central_,*photon_scale_central_;
+    
+   
     
     
     std::vector<float> *elecPt_, *elecEta_, *elecPhi_, *elecEnergy_, *elecID_, *elecISO_;
@@ -244,7 +266,7 @@ class DijetTreeProducer : public edm::EDAnalyzer
     std::vector<float> *ptAK4_,*jecAK4_,*etaAK4_,*phiAK4_,*massAK4_,*energyAK4_,*areaAK4_,*csvAK4_,*qgdAK4_, *deepcsv_probb_AK4_, *deepcsv_probbb_AK4_, *deepcsv_probc_AK4_, *deepcsv_probcc_AK4_,*chfAK4_,*nhfAK4_,*phfAK4_,*elfAK4_,*mufAK4_,*nemfAK4_,*cemfAK4_, *CvsL_taggerAK4_, *CvsB_taggerAK4_ ;
     std::vector<float> *ptAK4raw_,*etaAK4raw_,*phiAK4raw_,*massAK4raw_,*energyAK4raw_;
     
-    std::vector<int> *idLAK4_,*idTAK4_, *chHadMultAK4_, *chMultAK4_, *neHadMultAK4_, *neMultAK4_, *phoMultAK4_,*pdgIDGenAK4_, *hadronflavour_;
+    std::vector<int> *idLAK4_,*idTAK4_, *chHadMultAK4_, *chMultAK4_, *neHadMultAK4_, *neMultAK4_, *phoMultAK4_,*pdgIDGenAK4_, *hadronflavour_, *hadron_flavor_jets_;
     std::vector<float> *hf_hfAK4_, *hf_emfAK4_, *hofAK4_;
     std::vector<float> *ptGenAK4_,*etaGenAK4_,*phiGenAK4_,*massGenAK4_,*energyGenAK4_;
     

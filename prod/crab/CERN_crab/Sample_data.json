@@ -1,52 +1,36 @@
 [
   {
-    "name": "GJet-07Aug17-Run2016B_ver2_v1_V6_MVA_deepCSV_lighttuple",
-    "dataset": "/SinglePhoton/Run2016B-07Aug17_ver2-v1/MINIAOD",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "name": "GJet-07Aug17-Run2016B_ver2_v1__NewEGSF_V7_G_B",
+    "dataset": "/SinglePhoton/Run2016B-07Aug17_ver2-v1/MINIAOD"
   },
   {
-    "name": "GJet-07Aug17-Run2016C_V6_MVA_deepCSV_lighttuple",
-    "dataset": "/SinglePhoton/Run2016C-07Aug17-v1/MINIAOD",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "name": "GJet-07Aug17-Run2016C__NewEGSF_V7_G_B",
+    "dataset": "/SinglePhoton/Run2016C-07Aug17-v1/MINIAOD"
   },
   {
-    "name": "GJet-07Aug17-Run2016D_V6_MVA_deepCSV_lighttuple",
-    "dataset": "/SinglePhoton/Run2016D-07Aug17-v1/MINIAOD",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "name": "GJet-07Aug17-Run2016D__NewEGSF_V7_G_B",
+    "dataset": "/SinglePhoton/Run2016D-07Aug17-v1/MINIAOD"
   },
   {
-    "name": "GJet-07Aug17-Run2016E_V6_MVA_deepCSV_lighttuple",
-    "dataset": "/SinglePhoton/Run2016E-07Aug17-v1/MINIAOD",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "name": "GJet-07Aug17-Run2016E__NewEGSF_V7_G_B",
+    "dataset": "/SinglePhoton/Run2016E-07Aug17-v1/MINIAOD"
   },
   {
-    "name": "GJet-07Aug17-Run2016Fearly_V6_MVA_deepCSV_lighttuple",
+    "name": "GJet-07Aug17-Run2016Fearly__NewEGSF_V7_G_B",
     "dataset": "/SinglePhoton/Run2016F-07Aug17-v1/MINIAOD",
-    "Data.lumiMask": "/afs/cern.ch/work/h/hlattaud/private/production_GJet/CMSSW_8_0_26_patch1/src/CMSDIJET/DijetRootTreeMaker/prod/crab/CERN_crab/earlyFJSON.txt",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "Data.lumiMask": "/afs/cern.ch/work/h/hlattaud/private/production_GJet/CMSSW_8_0_26_patch1/src/CMSDIJET/DijetRootTreeMaker/prod/crab/CERN_crab/earlyFJSON.txt"
   },
   {
-    "name": "GJet-07Aug17-Run2016Flate__V6_MVA_deepCSV_lighttuple",
+    "name": "GJet-07Aug17-Run2016Flate___NewEGSF_V7_G_B",
     "dataset": "/SinglePhoton/Run2016F-07Aug17-v1/MINIAOD",
-    "Data.lumiMask": "/afs/cern.ch/work/h/hlattaud/private/production_GJet/CMSSW_8_0_26_patch1/src/CMSDIJET/DijetRootTreeMaker/prod/crab/CERN_crab/lateFJSON.txt",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "Data.lumiMask": "/afs/cern.ch/work/h/hlattaud/private/production_GJet/CMSSW_8_0_26_patch1/src/CMSDIJET/DijetRootTreeMaker/prod/crab/CERN_crab/lateFJSON.txt"
   },
   {
-    "name": "GJet-07Aug17-Run2016G_V6_MVA_deepCSV_lighttuple",
-    "dataset": "/SinglePhoton/Run2016G-07Aug17-v1/MINIAOD",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "name": "GJet-07Aug17-Run2016G__NewEGSF_V7_G_B",
+    "dataset": "/SinglePhoton/Run2016G-07Aug17-v1/MINIAOD"
   },
   {
-    "name": "GJet-07Aug17-Run2016H_V6_MVA_deepCSV_lighttuple",
-    "dataset": "/SinglePhoton/Run2016H-07Aug17-v1/MINIAOD",
-    "Data.unitsPerJob": 250,
-    "Data.outLFNDirBase": "/store/user/hlattaud/GammaJet/Gjet_2016_legacy/"
+    "name": "GJet-07Aug17-Run2016H__NewEGSF_V7_G_B",
+    "dataset": "/SinglePhoton/Run2016H-07Aug17-v1/MINIAOD"
   }
 ]
